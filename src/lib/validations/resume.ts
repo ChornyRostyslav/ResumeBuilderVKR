@@ -59,7 +59,7 @@ export const educationSchema = z.object({
 });
 
 export const languageSchema = z.object({
-  name: z.string().min(1, "Мова обов'язкова"),
+  name: z.string().min(1, "Мова обов'язкова").max(50, "Назва мови не може перевищувати 50 символів"),
   level: z.string().min(1, "Рівень обов'язковий"),
 });
 
