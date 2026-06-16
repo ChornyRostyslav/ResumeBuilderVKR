@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String?
+  role      Role     @default(USER)
+  isBlocked Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  resumes   Resume[]
+}
+
+model Template {
+  id          String   @id @default(cuid())
+  name        String
+  category    String   @default("standard")
+  previewUrl  String?
+  isPublished Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Resume {
+  id             String   @id @default(cuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title          String   @default("My Resume")
+  firstName      String?
+  lastName       String?
+  contactEmail   String?
+  phone          String?
+  location       String?
+  desiredRole    String?
+  employmentType String?
+  salary         String?
+  about          String?
+  experience     Json?    // Stores array of experience objects
+  education      Json?    // Stores array of education objects
+  skills         String[] // Array of skill tags
+  languages      Json?    // Stores array of language objects {name, level}
+  photoUrl       String?
+  template       String   @default("standard")
+  isPublic       Boolean  @default(false)
+  shareId        String?  @unique
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([isPublic, id])
+}

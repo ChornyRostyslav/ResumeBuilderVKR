@@ -1,0 +1,28 @@
+; PhysMemRead.inf — minimal INF for manual sc.exe installation (no PnP)
+
+[Version]
+Signature   = "$WINDOWS NT$"
+Class       = System
+ClassGuid   = {4D36E97D-E325-11CE-BFC1-08002BE10318}
+Provider    = %ManufacturerName%
+DriverVer   = 06/08/2026, 1.0.0.0
+CatalogFile = PhysMemRead.cat
+
+[DestinationDirs]
+DefaultDestDir = 12   ; %windir%\system32\drivers
+
+[SourceDisksNames]
+1 = %DiskName%
+
+[SourceDisksFiles]
+PhysMemRead.sys = 1
+
+[DefaultInstall.NT$ARCH$]
+CopyFiles = Drivers_Dir
+
+[Drivers_Dir]
+PhysMemRead.sys
+
+[Strings]
+ManufacturerName = "PhysMemRead"
+DiskName         = "PhysMemRead Installation Disk"
